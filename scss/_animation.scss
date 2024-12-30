@@ -1,0 +1,84 @@
+@charset "utf-8";
+@import './mixin';
+
+/* animation set */
+@keyframes overlay {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+@keyframes star {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
+}
+@keyframes banner-txt {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+[data-action-type*="slide"] { 
+    &.active {
+        transform: translate(0, 0) !important;
+        opacity: 1 !important;
+    }
+}
+[data-action-type="overlay-txt"] {
+	position: relative;
+    z-index: 1;
+	p {
+        @include font($l: 1.4, $a: left, $t: px(-.5), $c: var(--color-white));
+        position: relative;
+        display: inline-block;
+        -webkit-text-stroke: px(1) var(--color-base4);
+        -webkit-text-fill-color: var(--color-trans);
+    }
+    .cover {
+        @include pos($p: absolute, $l: 0, $t: 0, $z: 1);
+        @include font($s: inherit, $w: inherit, $l: inherit, $a: inherit, $t: inherit, $c: var(--color-white));
+        width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-shadow: px(1) px(1) rgba(180, 180, 180, .1),
+                 	px(2) px(2) rgba(190, 190, 190, .1),
+                 	px(3) px(3) rgba(200, 200, 200, .1),
+                 	px(4) px(4) rgba(210, 210, 210, .1),
+                 	px(5) px(5) rgba(220, 220, 220, .1),
+                 	px(6) px(6) rgba(230, 230, 230, .1);
+        -webkit-text-stroke: px(1) var(--color-base1);
+        -webkit-text-fill-color: var(--color-white);
+        &.neon {
+            background-image: linear-gradient(to right, #9c00b3, #00caff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        &.skew {
+            transform: rotateY(-10deg) skew(0, -4deg);
+        }
+		&.overlay {
+			animation-name: overlay;
+		}
+        > span {
+            position: relative;
+            white-space: nowrap;
+            &:after {
+                content: '';
+                @include pos($p: absolute, $l: 0, $b: px(-2), $z: 1);
+                display: block;
+                width: 100%;
+                height: 60%;
+                background-color: #fffd13;
+                overflow: hidden;
+                opacity: .4;
+                pointer-events: none;
+            }
+        }
+    }
+}
+
+.overlay-total {
+    > div ~ div {
+        margin-top: px(10); 
+    }
+    &.overlay .cover {
+        animation-name: overlay;
+    }
+}
